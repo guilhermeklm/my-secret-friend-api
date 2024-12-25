@@ -1,0 +1,24 @@
+{
+  "name": "my-secret-friend-api",
+  "version": "1.0.0",
+  "description": "API amigo secreto",
+  "main": "index.js",
+  "scripts": {
+    "start-local": "npx nodemon ./src/app.ts",
+    "start-prod": "node dist/app.js",
+    "build": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guilherme Karam",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "globals": "^15.14.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
