@@ -1,4 +1,4 @@
-import { InvalidValueError } from "./exception/invalid-value-error";
+import { InvalidValueError } from "../exception/invalid-value-error";
 
 export class User {
   private _name: string;

@@ -1,0 +1,7 @@
+{
+  "user.business.error.user_name_is_empty": "O nome do usuário não pode estar vazio.",
+  "user.business.error.user_email_is_empty": "O e-mail do usuário não pode estar vazio.",
+  "user.business.error.user_password_empty": "A senha do usuário não pode estar vazia.",
+  "user.application.success.user_created": "Usuário criado com sucesso!",
+  "user.application.error.user_creation_failed": "Erro ao criar usuário"
+}

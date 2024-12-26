@@ -1,11 +1,13 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express'
+import swaggerFile from '../swagger_output.json';
+import bodyParser from 'body-parser';
+import { userRoute } from './application/routers/user-route';
+
 const app = express();
-const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(bodyParser.json());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use(userRoute)
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
+export default app 

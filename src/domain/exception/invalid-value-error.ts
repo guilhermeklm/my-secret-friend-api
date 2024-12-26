@@ -1,4 +1,6 @@
-export class InvalidValueError extends Error {
+import { BusinessError } from "./business-error"
+
+export class InvalidValueError extends BusinessError {
   key: string
 
   constructor(
