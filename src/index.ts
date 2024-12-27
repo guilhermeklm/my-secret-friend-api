@@ -5,10 +5,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const PORT = `${process.env.PORT || 3000}`;
+const MONGO_DB_URL = process.env.MONGO_DB_URL
+console.log(PORT)
+console.log(MONGO_DB_URL)
 
 const startServer = async () => {
   try {
-    await connect(`${process.env.MONGO_DB_URL}`);
+    await connect(MONGO_DB_URL);
     console.log("Connected to MongoDB");
 
     app.listen(PORT, () => {
