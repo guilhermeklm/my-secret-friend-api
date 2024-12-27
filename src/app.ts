@@ -8,6 +8,6 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-app.use(userRoute)
+app.use("/api", userRoute);
 
 export default app 

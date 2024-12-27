@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start-local": "npx nodemon ./src/index.ts",
-    "start-prod": "node dist/index.js",
+    "start-prod": "node dist/src/index.js",
     "swagger": "node ./swagger.js",
     "build": "npx tsc"
   },

@@ -2,17 +2,15 @@ import { Request, Response } from "express";
 import { CreateUserInputDTO } from "../dto/input/create-user-input-dto";
 import { CreateUser } from "../usecase/user/create-user";
 import { ContextLog, LevelLog, Logger } from "../../domain/log/logger";
-import { BaseController } from "./base-controller";
 import { ApiResponseError } from "../dto/output/api-response-error";
 import { ApiResponseSuccess } from "../dto/output/api-response-success";
 import { UseCaseFactory } from "../usecase/use-case-factory";
 
-export class UserController extends BaseController {
+export class UserController {
 
   private createUser: CreateUser
 
   constructor() {
-    super()
     this.createUser = UseCaseFactory.createUserInstance()
   }
 

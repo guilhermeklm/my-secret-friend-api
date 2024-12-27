@@ -13,10 +13,114 @@
   "paths": {
     "/api/v1/auth/register": {
       "post": {
-        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "description": "Endpoint para criar um novo usuário no sistema.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados necessários para criar um usuário.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "João Silva"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "joao.silva@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "senha123"
+                }
+              },
+              "required": [
+                "name",
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Usuário criado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 201
+                },
+                "message": {
+                  "type": "string",
+                  "example": "\"Usuário criado com sucesso!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "token_jwt"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida. Erro nos parâmetros enviados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "Data-hora-atual"
+                },
+                "statusCode": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Erro"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "Data-hora-atual"
+                },
+                "statusCode": {
+                  "type": "number",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Erro"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }

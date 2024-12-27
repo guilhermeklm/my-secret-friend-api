@@ -4,7 +4,6 @@ import { CreateUserInputDTO } from "../../dto/input/create-user-input-dto";
 import { CreateUserOuputDTO } from "../../dto/output/create-user-ouput-dto";
 import { UseCaseBase } from "../use-case-base";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
 import { ContextLog, LevelLog, Logger } from "../../../domain/log/logger";
 
 export class CreateUser implements UseCaseBase<CreateUserInputDTO, CreateUserOuputDTO> {
@@ -37,8 +36,6 @@ export class CreateUser implements UseCaseBase<CreateUserInputDTO, CreateUserOup
       name: user.name,
       email: user.email
     }
-
-    dotenv.config();
 
     const jwtSecret = process.env.JWT_SECRET
     const token = jwt.sign(payload, jwtSecret)
