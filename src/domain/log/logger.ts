@@ -1,5 +1,6 @@
 import * as ptMessages from '../../../messages/pt.json';
 import { BusinessError } from "../exception/business-error";
+import { version } from '../../../package.json'; 
 
 export class Logger {
   ts: Date;
@@ -39,7 +40,7 @@ export class LoggerBuilder {
   constructor() {
     this.logger = new Logger()
     this.logger.ts = new Date()
-    this.logger.version = process.env.VERSION as string
+    this.logger.version = version
   }
 
   withCorrelationId(correlationId: string): this {
@@ -106,18 +107,6 @@ export class LoggerBuilder {
   }
 
   log(): void {
-    if (!this.logger.correlationId) {
-      throw new Error("correlationId is required");
-    }
-
-    if (!this.logger.message) {
-      throw new Error("message is required");
-    }
-
-    if (!this.logger.level) {
-      throw new Error("level is required");
-    }
-
     console.log(JSON.stringify(this.logger))
   }
 }

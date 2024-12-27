@@ -16,6 +16,7 @@ export class UserController {
 
   public async create(req: Request, res: Response) {
     const startTime = Date.now();
+    const correlationId = req.get("X-CORRELATION-ID");
 
     try {
       Logger.builder()
@@ -23,10 +24,10 @@ export class UserController {
         .withContext(ContextLog.CREATE_USER)
         .withLevel(LevelLog.INFO)
         .withMethod(req.method)
+        .withCorrelationId(correlationId)
         .log();
 
       const body = req.body;
-      const correlationId = req.get("x-correlation-id");
       const dto: CreateUserInputDTO = {
         name: body.name,
         email: body.email,
@@ -43,6 +44,7 @@ export class UserController {
         .withContext(ContextLog.CREATE_USER)
         .withLevel(LevelLog.INFO)
         .withMethod(req.method)
+        .withCorrelationId(correlationId)
         .withResponseData(response)
         .withDurationMs(durationMs)
         .withStatusCode(201)
@@ -66,6 +68,7 @@ export class UserController {
         .withContext(ContextLog.CREATE_USER)
         .withLevel(LevelLog.ERROR)
         .withMethod(req.method)
+        .withCorrelationId(correlationId)
         .withDurationMs(durationMs)
         .log();
 

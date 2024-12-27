@@ -30,9 +30,10 @@ export class CreateUser implements UseCaseBase<CreateUserInputDTO, CreateUserOup
       password: input.password
     })
 
-    await this.userRepository.create(user)
+    const userId = await this.userRepository.create(user)
 
     const payload = {
+      id: userId,
       name: user.name,
       email: user.email
     }

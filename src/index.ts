@@ -14,10 +14,9 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`Express is listening at http://localhost:${PORT}`);
     });
-    
   } catch (error) {
     console.error("Failed to start application:", error.message);
-    console.trace(error)
+    console.trace(error);
     process.exit(1);
   }
 };

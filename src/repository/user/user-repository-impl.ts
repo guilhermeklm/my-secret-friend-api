@@ -4,12 +4,13 @@ import { UserModel } from "../mongodb/user-schema";
 
 export class UserRepositoryImpl implements UserRepository {
 
-  async create(user: User) {
-    await UserModel.create({
+  async create(user: User): Promise<string> {
+    const newUser = await UserModel.create({
       name: user.name,
       email: user.email,
       password: user.password
     })
-  }
 
+    return newUser._id.toString();
+  }
 }
