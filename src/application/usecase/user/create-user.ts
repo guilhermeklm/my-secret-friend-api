@@ -6,7 +6,7 @@ import { UseCaseBase } from "../use-case-base";
 import jwt from "jsonwebtoken";
 import { ContextLog, LevelLog, Logger } from "../../../domain/log/logger";
 import { EntitySpecifications } from "../../../domain/specification/entity-specification";
-import { IsEmailAlreadyExistsSpecification } from "../../../domain/user/specification/email-alread-exists-specification";
+import { EmailAlreadyExistsSpecification } from "../../../domain/user/specification/email-alread-exists-specification";
 
 export class CreateUser implements UseCaseBase<CreateUserInputDTO, CreateUserOuputDTO> {
 
@@ -17,7 +17,7 @@ export class CreateUser implements UseCaseBase<CreateUserInputDTO, CreateUserOup
     userRepository: UserRepository
   ) {
     this.userRepository = userRepository
-    const emailSpecification = new IsEmailAlreadyExistsSpecification(userRepository);
+    const emailSpecification = new EmailAlreadyExistsSpecification(userRepository);
     this.userSpecifications = new EntitySpecifications<User>(
       emailSpecification,
     );
