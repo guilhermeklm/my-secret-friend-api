@@ -13,4 +13,17 @@ export class UserRepositoryImpl implements UserRepository {
 
     return newUser._id.toString();
   }
+
+  async existsByEmail(email: string): Promise<boolean> {
+    const user = await UserModel.findOne(
+      {
+        email: email
+      }
+    );
+
+    if (user) {
+      return true
+    }
+    return false
+  }
 }

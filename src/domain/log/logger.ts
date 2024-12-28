@@ -1,6 +1,7 @@
 import * as ptMessages from '../../../messages/pt.json';
 import { BusinessError } from "../exception/business-error";
-import { version } from '../../../package.json'; 
+import { version } from '../../../package.json';
+import { SpecificationError } from '../exception/specification-error';
 
 export class Logger {
   ts: Date;
@@ -17,9 +18,36 @@ export class Logger {
   level?: LevelLog;
   responseData?: string;
   errorMessage?: string;
+  classError?: string
 
   static builder(): LoggerBuilder {
     return new LoggerBuilder();
+  }
+
+  static Info(
+    keyMessage: string
+  ): LoggerBuilder {
+    return new LoggerBuilder()
+      .withLevel(LevelLog.INFO)
+      .withMessage(keyMessage)
+  }
+
+  static Error(error: Error): LoggerBuilder {
+    return new LoggerBuilder()
+      .withLevel(LevelLog.ERROR)
+      .withError(error);
+  }
+
+  static FatalError(error: Error): LoggerBuilder {
+    return new LoggerBuilder()
+      .withLevel(LevelLog.FATAL_ERROR)
+      .withError(error);
+  }
+
+  static SpecificationError(keyMessages: string[]): LoggerBuilder {
+    return new LoggerBuilder()
+      .withErrorMessages(keyMessages)
+      .withLevel(LevelLog.ERROR)
   }
 }
 
@@ -27,14 +55,15 @@ export enum LevelLog {
   INFO = "INFO",
   WARM = "WARM",
   ERROR = "ERROR",
-  DEBUG = "DEBUG"
+  DEBUG = "DEBUG",
+  FATAL_ERROR = "FATAL_ERROR"
 }
 
 export enum ContextLog {
   CREATE_USER = "CREATE_USER"
 }
 
-export class LoggerBuilder {
+class LoggerBuilder {
   private logger: Logger
 
   constructor() {
@@ -54,7 +83,7 @@ export class LoggerBuilder {
   }
 
   withMessage(message: string): this {
-    this.logger.message = message;
+    this.logger.message = ptMessages[message] || message;
     return this;
   }
 
@@ -93,9 +122,20 @@ export class LoggerBuilder {
     return this
   }
 
+  withErrorMessages(errorKeys: string[]): this {
+    let message = ""
+    for (const key of errorKeys) {
+      const translatedMessage = ptMessages[key] || key;
+      message += `${translatedMessage} - `
+    }
+
+    this.logger.errorMessage = message;
+    return this
+  }
+
   withError(error: Error): this {
-    if(error instanceof BusinessError) {
-      const translatedMessage = ptMessages[error.key] || error.message;
+    if (error instanceof BusinessError || error instanceof SpecificationError) {
+      const translatedMessage = ptMessages[error.keyMessage] || error.message;
       this.logger.errorMessage = translatedMessage;
     } else {
       this.logger.errorMessage = error.message
@@ -103,6 +143,11 @@ export class LoggerBuilder {
 
     this.logger.stackTrace = error.stack
 
+    return this
+  }
+
+  withClassError(classError: string): this {
+    this.logger.classError = classError;
     return this
   }
 

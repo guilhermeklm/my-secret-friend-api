@@ -3,5 +3,6 @@
   "user.business.error.user_email_is_empty": "O e-mail do usuário não pode estar vazio.",
   "user.business.error.user_password_empty": "A senha do usuário não pode estar vazia.",
   "user.application.success.user_created": "Usuário criado com sucesso!",
-  "user.application.error.user_creation_failed": "Erro ao criar usuário"
+  "user.application.error.user_creation_failed": "Erro ao criar usuário",
+  "user.business.error.email_already_exists": "Este e-mail já está em uso"
 }

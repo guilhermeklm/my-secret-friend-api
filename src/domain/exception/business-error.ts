@@ -1,8 +1,8 @@
-export abstract class BusinessError extends Error {
-  key: string
+export class BusinessError extends Error {
+  keyMessage: string
 
-  constructor(key: string) {
-    super("")
-    this.key = key
+  constructor(keyMessage: string) {
+    super(`Erro de dominio: ${keyMessage} `)
+    this.keyMessage = keyMessage
   }
 }
