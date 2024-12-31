@@ -1,12 +1,12 @@
-import { UserRepository } from "../../../domain/user/repository/user-repository";
-import { User } from "../../../domain/user/user";
-import { CreateUserInputDTO } from "../../dto/input/create-user-input-dto";
-import { CreateUserOuputDTO } from "../../dto/output/create-user-ouput-dto";
+import { UserRepository } from "../../domain/user/repository/user-repository";
+import { User } from "../../domain/user/user";
 import { UseCaseBase } from "../use-case-base";
 import jwt from "jsonwebtoken";
-import { ContextLog, LevelLog, Logger } from "../../../domain/log/logger";
-import { EntitySpecifications } from "../../../domain/specification/entity-specification";
-import { EmailAlreadyExistsSpecification } from "../../../domain/user/specification/email-alread-exists-specification";
+import { ContextLog, LevelLog, Logger } from "../../domain/log/logger";
+import { EntitySpecifications } from "../../domain/specification/entity-specification";
+import { EmailAlreadyExistsSpecification } from "../../domain/user/specification/email-already-exists-specification";
+import { CreateUserOuputDTO } from "../dto/output/create-user-ouput-dto";
+import { CreateUserInputDTO } from "../dto/input/create-user-input-dto";
 
 export class CreateUser implements UseCaseBase<CreateUserInputDTO, CreateUserOuputDTO> {
 

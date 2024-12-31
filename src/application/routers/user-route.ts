@@ -25,7 +25,7 @@ userRoute.post("/v1/auth/register", (req: Request, res: Response) =>
       description: 'Usuário criado com sucesso.',
       schema: {
         statusCode: 201,
-        message: '"Usuário criado com sucesso!',
+        message: 'Usuário criado com sucesso!',
         data: {
           token: 'token_jwt'
         }
@@ -51,6 +51,54 @@ userRoute.post("/v1/auth/register", (req: Request, res: Response) =>
     }
   */
   userController.create(req, res)
+);
+
+userRoute.post("/v1/auth/login", (req: Request, res: Response) =>
+  /*
+    #swagger.tags = ['Autenticação']
+    #swagger.description = 'Endpoint para login do usuário no sistema'
+
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Dados necessários para criar um usuário.',
+      required: true,
+      schema: {
+          $email: 'joao.silva@example.com',
+          $password: 'senha123'
+        }
+      }
+    }
+
+    #swagger.responses[200] = {
+      description: 'Sucesso no login',
+      schema: {
+        statusCode: 200,
+        message: 'Login feito com sucesso!',
+        data: {
+          token: 'token_jwt'
+        }
+      }
+    }
+
+    #swagger.responses[400] = {
+      description: 'Requisição inválida. Erro nos parâmetros enviados.',
+      schema: {
+        ts: "Data-hora-atual",
+        statusCode: 400,
+        message: 'Erro',
+      }
+    }
+
+    #swagger.responses[500] = {
+      description: 'Erro interno no servidor.',
+      schema: {
+        ts: "Data-hora-atual",
+        statusCode: 500,
+        message: 'Erro',
+      }
+    }
+  */
+  userController.login(req, res)
 );
 
 export { userRoute };

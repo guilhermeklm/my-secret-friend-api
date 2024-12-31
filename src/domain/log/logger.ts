@@ -60,7 +60,8 @@ export enum LevelLog {
 }
 
 export enum ContextLog {
-  CREATE_USER = "CREATE_USER"
+  CREATE_USER = "CREATE_USER",
+  LOGIN_USER = "LOGIN_USER"
 }
 
 class LoggerBuilder {

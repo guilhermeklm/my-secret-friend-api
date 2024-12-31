@@ -69,7 +69,116 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "\"Usuário criado com sucesso!"
+                  "example": "Usuário criado com sucesso!"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "token_jwt"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida. Erro nos parâmetros enviados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "Data-hora-atual"
+                },
+                "statusCode": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Erro"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ts": {
+                  "type": "string",
+                  "example": "Data-hora-atual"
+                },
+                "statusCode": {
+                  "type": "number",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Erro"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "description": "Endpoint para login do usuário no sistema",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados necessários para criar um usuário.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "joao.silva@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "senha123"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso no login",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "number",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Login feito com sucesso!"
                 },
                 "data": {
                   "type": "object",

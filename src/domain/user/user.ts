@@ -1,15 +1,18 @@
 import { InvalidValueError } from "../exception/invalid-value-error";
 
 export class User {
+  private _id: string;
   private _name: string;
   private _email: string;
   private _password: string;
 
   private constructor(
+    id: string,
     name: string,
     email: string,
     password: string
   ) {
+    this._id = id
     this._name = name
     this._email = email
     this._password = password
@@ -25,6 +28,11 @@ export class User {
       throw new InvalidValueError("user.business.error.user_email_is_empty")
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.email)) {
+      throw new InvalidValueError("user.business.error.user_email_invalid");
+    }
+
     if (!this.password) {
       throw new InvalidValueError("user.business.error.user_password_empty")
     }
@@ -32,6 +40,7 @@ export class User {
 
   public static New(prop: UserProp) {
     return new User(
+      prop.id,
       prop.name,
       prop.email,
       prop.password
@@ -49,9 +58,14 @@ export class User {
   get password() {
     return this._password
   }
+
+  get id() {
+    return this._id
+  }
 }
 
 export interface UserProp {
+  id?: string;
   name: string;
   email: string;
   password: string;

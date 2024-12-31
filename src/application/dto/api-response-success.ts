@@ -1,4 +1,4 @@
-import * as ptMessages from '../../../../messages/pt.json';
+import * as ptMessages from '../../../messages/pt.json';
 
 export class ApiResponseSuccess {
   ts: Date;

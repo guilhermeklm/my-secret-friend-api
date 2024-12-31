@@ -1,7 +1,6 @@
 import { SpecificationError } from "../exception/specification-error";
-import { ContextLog, LevelLog, Logger } from "../log/logger";
+import { Logger } from "../log/logger";
 import { ISpecification } from "./specification";
-import { SpecificationResult } from "./specification-result";
 
 export class EntitySpecifications<T> {
   private specifications: ISpecification<T>[];

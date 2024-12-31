@@ -1,6 +1,7 @@
-import { BusinessError } from "../../../domain/exception/business-error";
-import * as ptMessages from '../../../../messages/pt.json';
-import { SpecificationError } from "../../../domain/exception/specification-error";
+import { BusinessError } from "../../domain/exception/business-error";
+import * as ptMessages from '../../../messages/pt.json';
+import { SpecificationError } from "../../domain/exception/specification-error";
+import { InfraestructureError } from "../../domain/exception/infraestructure-error";
 
 export class ApiResponseError {
   ts: Date;
@@ -17,16 +18,18 @@ export class ApiResponseError {
 
   private buildStatusCode(error: Error): number {
     if (error instanceof BusinessError) {
-      return 400;
+      return error.statusCode;
     } else if (Array.isArray(error) && error.every(e => e instanceof SpecificationError)) {
       return 400
+    } else if (error instanceof InfraestructureError) {
+      return error.statusCode
     } else {
       return 500
     }
   }
 
   private buildMessage(error: Error): string[] {
-    if (error instanceof BusinessError) {
+    if (error instanceof BusinessError || error instanceof InfraestructureError) {
       const translatedMessage = ptMessages[error.keyMessage] || error.message;
       return [translatedMessage];
     } else if (Array.isArray(error) && error.every(e => e instanceof SpecificationError)) {

@@ -1,17 +1,21 @@
 import { Request, Response } from "express";
-import { CreateUserInputDTO } from "../dto/input/create-user-input-dto";
-import { CreateUser } from "../usecase/user/create-user";
-import { ContextLog, LevelLog, Logger } from "../../domain/log/logger";
-import { ApiResponseError } from "../dto/output/api-response-error";
-import { ApiResponseSuccess } from "../dto/output/api-response-success";
-import { UseCaseFactory } from "../usecase/use-case-factory";
+import { CreateUser } from "../../usecase/user/create-user";
+import { ContextLog, Logger } from "../../domain/log/logger";
+import { UseCaseFactory } from "../../usecase/use-case-factory";
+import { ApiResponseError } from "../dto/api-response-error";
+import { ApiResponseSuccess } from "../dto/api-response-success";
+import { LoginUserInputDTO } from "../../usecase/dto/input/login-user-input.dto";
+import { CreateUserInputDTO } from "../../usecase/dto/input/create-user-input-dto";
+import { LoginUser } from "../../usecase/user/login-user";
 
 export class UserController {
 
   private createUser: CreateUser
+  private loginUser: LoginUser
 
   constructor() {
     this.createUser = UseCaseFactory.createUserInstance()
+    this.loginUser = UseCaseFactory.loginUserInstance()
   }
 
   public async create(req: Request, res: Response) {
@@ -19,10 +23,8 @@ export class UserController {
     const correlationId = req.get("X-CORRELATION-ID");
 
     try {
-      Logger.builder()
-        .withMessage("Processo de criação de usuário iniciado")
+      Logger.Info("Processo de criação de usuário iniciado")
         .withContext(ContextLog.CREATE_USER)
-        .withLevel(LevelLog.INFO)
         .withMethod(req.method)
         .withCorrelationId(correlationId)
         .log();
@@ -39,10 +41,8 @@ export class UserController {
 
       const durationMs = Date.now() - startTime;
 
-      Logger.builder()
-        .withMessage("Usuário criado com sucesso")
+      Logger.Info("Usuário criado com sucesso")
         .withContext(ContextLog.CREATE_USER)
-        .withLevel(LevelLog.INFO)
         .withMethod(req.method)
         .withCorrelationId(correlationId)
         .withResponseData(response)
@@ -62,11 +62,52 @@ export class UserController {
 
       const apiResponseError = new ApiResponseError(error)
 
-      Logger.builder()
-        .withMessage("user.application.error.user_creation_failed")
-        .withError(error)
+      Logger.Error(error)
         .withContext(ContextLog.CREATE_USER)
-        .withLevel(LevelLog.ERROR)
+        .withMethod(req.method)
+        .withCorrelationId(correlationId)
+        .withDurationMs(durationMs)
+        .log();
+
+      res.status(apiResponseError.statusCode).json(apiResponseError);
+    }
+  }
+
+  public async login(req: Request, res: Response) {
+    const startTime = Date.now();
+    const correlationId = req.get("X-CORRELATION-ID");
+
+    try {
+      Logger.Info("Processo de login do usuario iniciado")
+        .withContext(ContextLog.CREATE_USER)
+        .withMethod(req.method)
+        .withCorrelationId(correlationId)
+        .log();
+
+      const body = req.body;
+
+      const dto: LoginUserInputDTO = {
+        email: body.email,
+        password: body.password,
+        correlationId: correlationId,
+      };
+
+      const outputDto = await this.loginUser.execute(dto);
+
+      const apiResponseSuccess = new ApiResponseSuccess(
+        200,
+        "user.application.success.login_sucessed",
+        outputDto
+      )
+
+      res.status(200).json(apiResponseSuccess);
+    } catch (error) {
+      const durationMs = Date.now() - startTime;
+
+      const apiResponseError = new ApiResponseError(error)
+
+      Logger.Error(error)
+        .withContext(ContextLog.CREATE_USER)
         .withMethod(req.method)
         .withCorrelationId(correlationId)
         .withDurationMs(durationMs)
