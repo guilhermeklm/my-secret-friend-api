@@ -8,6 +8,7 @@ const config: Config = {
   },
   testEnvironment: "node",
   testMatch: ["**/src/**/*.test.ts"],
+  collectCoverage: true,
 };
 
 export default config;
